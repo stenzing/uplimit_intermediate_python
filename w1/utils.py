@@ -119,11 +119,19 @@ class DataReader:
             row_vals = row.strip('\n').split(self._sep)
             
             # define the row_vals dictionary 
-            row_vals = #### [YOUR CODE HERE] ####
-            row_vals['n_row'] = #### [YOUR CODE HERE] ####
-
+            row_vals = {
+            'StockCode': row_vals[0],
+            'Description': row_vals[1],
+            'UnitPrice': float(row_vals[2]) if n_row != 0 else row_vals[2],
+            'Quantity': int(row_vals[3]) if n_row != 0 else row_vals[3],
+            'TotalPrice': float(row_vals[4]) if n_row != 0 else row_vals[4],
+            'Country': row_vals[5],
+            'InvoiceNo' : row_vals[6],
+            'Date' : row_vals[7],
+            }
+            row_vals['n_row'] = n_row
             # return results: 
-            #### [YOUR CODE HERE] ####
+            yield row_vals
     
     ######################################## YOUR CODE HERE ##################################################
 
