@@ -165,7 +165,11 @@ def main() -> List[Dict]:
 
     ######################################## YOUR CODE HERE ##################################################
     with multiprocessing.Pool(processes=n_processes) as pool:
+        revenue_data = pool.starmap(run, batches)
 
+        # Close the pool and wait for all the tasks to complete
+        pool.close()
+        pool.join()
     ######################################## YOUR CODE HERE ##################################################
 
     en = time.time()
@@ -173,7 +177,7 @@ def main() -> List[Dict]:
 
     ######################################## YOUR CODE HERE ##################################################
     for yearly_data in revenue_data:
-        
+        print(yearly_data)
 
     ######################################## YOUR CODE HERE ##################################################
         
