@@ -45,6 +45,14 @@ class DB:
         Read more about datatypes in Sqlite here -> https://www.sqlite.org/datatype3.html
         """
     ######################################## YOUR CODE HERE ##################################################
+        self._connection.execute(f'''CREATE TABLE IF NOT EXISTS {self._table_name} (
+                                 process_id TEXT PRIMARY KEY, 
+                                 file_name TEXT default NULL, 
+                                 file_path TEXT default NULL,
+                                 description TEXT default NULL, 
+                                 start_time TEXT not null, 
+                                 end_time TEXT default NULL, 
+                                 percentage REAL default NULL);''')
 
     ######################################## YOUR CODE HERE ##################################################
 
@@ -63,7 +71,9 @@ class DB:
         :return: None
         """
     ######################################## YOUR CODE HERE ##################################################
-
+        self._connection.execute(f'''INSERT INTO {self._table_name} VALUES (?, ?, ?, ?, ?, ?, ?);''',
+                                 (process_id, file_name, file_path, description, start_time, end_time, percentage))
+        self._connection.commit()
     ######################################## YOUR CODE HERE ##################################################
 
     def read_all(self) -> List[Dict]:
@@ -95,7 +105,9 @@ class DB:
         :return: None
         """
     ######################################## YOUR CODE HERE ##################################################
-
+        self._connection.execute(f'''UPDATE {self._table_name} SET percentage = ? WHERE process_id = ?;''',
+                                 (percentage, process_id))
+        self._connection.commit()
     ######################################## YOUR CODE HERE ##################################################
 
 
