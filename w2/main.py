@@ -62,20 +62,12 @@ def get_sales_information(file_path: str) -> Dict:
 
 # batches the files based on the number of processes
 def batch_files(file_paths: List[str], n_processes: int) -> List[set]:
-    if n_processes > len(file_paths):
-        return #### [YOUR CODE HERE] ####
-
-    n_per_batch = #### [YOUR CODE HERE] ####
-
-    first_set_len = n_processes * n_per_batch
-    first_set = file_paths[0:first_set_len]
-    second_set = #### [YOUR CODE HERE] ####
-
-    batches = [set(file_paths[i:i + n_per_batch]) for i in range(0, len(first_set), n_per_batch)]
-    for ind, each_file in enumerate(second_set):
-        #### [YOUR CODE HERE] ####
-
-    return batches
+    i = 0
+    batches = [[] for i in range(0,n_processes)]
+    while file_paths:
+        batches[i].append(file_paths.pop())
+        i = (i+1) % n_processes
+    return [set(i) for i in batches]
 
 
 # Fetch the revenue data from a file
@@ -165,7 +157,8 @@ def main() -> List[Dict]:
 
     ######################################## YOUR CODE HERE ##################################################
     with multiprocessing.Pool(processes=n_processes) as pool:
-        revenue_data = pool.starmap(run, batches)
+        params = [(f, i) for i, f in enumerate(batches)]
+        revenue_data = flatten(pool.starmap(run, params))
 
         # Close the pool and wait for all the tasks to complete
         pool.close()
@@ -177,13 +170,12 @@ def main() -> List[Dict]:
 
     ######################################## YOUR CODE HERE ##################################################
     for yearly_data in revenue_data:
-        print(yearly_data)
+        pass
 
     ######################################## YOUR CODE HERE ##################################################
         
     # should return revenue data
-
-    return #### [YOUR CODE HERE] ####
+    return revenue_data
 
 
 if __name__ == '__main__':
