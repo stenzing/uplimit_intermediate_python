@@ -22,11 +22,12 @@ class Logger:
         # set the logging formatter to the f_handler
         formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         self.f_handler.setFormatter(formatter)
+        self.logger.addHandler(self.f_handler)
         ######################################## YOUR CODE HERE ##################################################
 
         ######################################## YOUR CODE HERE ##################################################
         # Add handlers to the logger and setlevel to DEBUG
-        self.f_handler.setLevel("DEBUG")
+        self.logger.setLevel("DEBUG")
         ######################################## YOUR CODE HERE ##################################################
 
     def warning(self, msg):
